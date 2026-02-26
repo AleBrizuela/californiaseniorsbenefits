@@ -1509,6 +1509,26 @@ footer { background: #0a1628 !important; }
 
 <!-- Main JavaScript -->
 <script>
+  // ZIP → State lookup
+  function zipToState(zip) {
+    if (!zip || zip.length < 3) return '';
+    const p = parseInt(zip.substring(0, 3), 10);
+    if (isNaN(p)) return '';
+    const map = [
+      [0,6,'PR'],[6,10,'NH'],[10,28,'MA'],[28,30,'RI'],[30,56,'NY'],[56,63,'NJ'],[66,100,'PA'],
+      [100,150,'PA'],[150,197,'PA'],[197,200,'DE'],[200,206,'DC'],[206,213,'MD'],[213,247,'VA'],
+      [247,269,'WV'],[270,290,'NC'],[290,300,'SC'],[300,320,'GA'],[320,350,'FL'],[350,370,'AL'],
+      [370,386,'TN'],[386,398,'MS'],[400,430,'KY'],[430,460,'OH'],[460,480,'IN'],[480,500,'MI'],
+      [500,530,'IA'],[530,550,'WI'],[550,568,'MN'],[570,578,'SD'],[580,589,'ND'],[590,600,'MT'],
+      [600,633,'IL'],[633,659,'MO'],[660,680,'KS'],[680,694,'NE'],[700,716,'LA'],[716,730,'AR'],
+      [730,750,'OK'],[750,800,'TX'],[800,817,'CO'],[820,832,'WY'],[832,839,'ID'],[840,848,'UT'],
+      [850,866,'AZ'],[870,886,'NM'],[889,899,'NV'],[900,962,'CA'],[967,969,'HI'],[970,980,'OR'],
+      [980,995,'WA'],[995,1000,'AK']
+    ];
+    for (const [lo, hi, st] of map) if (p >= lo && p < hi) return st;
+    return '';
+  }
+
   // ============================================================
   // CHAT AGENT STATE MACHINE
   // ============================================================
@@ -2306,7 +2326,7 @@ footer { background: #0a1628 !important; }
       fetch('https://hooks.zapier.com/hooks/catch/26596586/u0480fa/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({...chatState.leadData, submittedAt: new Date().toISOString(), site: 'californiaseniorsbenefits.com'})
+        body: JSON.stringify({...chatState.leadData, submittedAt: new Date().toISOString(), site: 'californiaseniorsbenefits.com', state: zipToState(chatState.leadData.zip || ''), consentGiven: true})
       }).catch(() => {});
     } catch(e) {}
 
