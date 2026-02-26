@@ -2489,7 +2489,7 @@ footer { background: #0a1628 !important; }
       console.log('[CASB-EN] Zapier payload:', JSON.stringify(zapPayload));
       const params = new URLSearchParams();
       Object.entries(zapPayload).forEach(([k,v]) => params.append(k, String(v)));
-      fetch('https://hooks.zapier.com/hooks/catch/26596586/u0480fa/', {
+      fetch('https://hooks.zapier.com/hooks/catch/26596586/u0mut50/', {
         method: 'POST',
         body: params
       }).then(r => console.log('[CASB-EN] Zapier response:', r.status)).catch(e => console.error('[CASB-EN] Zapier error:', e));
