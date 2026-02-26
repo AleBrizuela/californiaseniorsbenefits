@@ -962,8 +962,33 @@ footer .footer-bottom { background: rgba(0,0,0,0.35) !important; color: rgba(255
 
     /* ── Mobile Enhancements ── */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.25rem; }
-      .nav-logo { font-size: 1.25rem; }
+      body { font-size: 15px; line-height: 1.6; }
+      section { padding: 2.5rem 1.25rem; }
+      .hero, .contact-hero, .page-hero { padding: 2rem 1.25rem; }
+      h1 { font-size: 1.75rem; line-height: 1.2; }
+      h2 { font-size: 1.5rem; }
+      h3 { font-size: 1.2rem; }
+      .hero p { font-size: 1rem; }
+      .hero-ctas { flex-direction: column; gap: 0.75rem; }
+      .hero-ctas .btn { width: 100%; text-align: center; padding: 0.875rem 1.5rem; }
+      .container { padding: 0 1.25rem; }
+      .chat-window { height: auto; min-height: 400px; max-height: none; max-width: 100%; border-radius: 12px; }
+      .chat-messages { min-height: 300px; max-height: 60vh; overflow-y: auto; }
+      .message-bubble { max-width: 88%; font-size: 0.9rem; padding: 0.75rem 1rem; }
+      .quick-replies { gap: 0.5rem; }
+      .quick-reply-btn { padding: 0.75rem 1rem; font-size: 0.9rem; min-height: 44px; width: 100%; }
+      .chat-input { font-size: 16px; min-height: 44px; }
+      .chat-send-btn { width: 44px; height: 44px; }
+      .carriers-row { gap: 0.5rem; }
+      .carrier-pill { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+      .pain-points { grid-template-columns: 1fr; gap: 1rem; }
+      .pain-card { padding: 1.25rem; }
+      .pain-card h3 { font-size: 1.1rem; }
+      .pain-card p { font-size: 0.9rem; }
+      .fact-cards { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      nav { padding: 0.875rem 1.25rem; }
+      .nav-logo { font-size: 1.15rem; }
       .nav-toggle { display: block; }
       .nav-menu {
         display: none; position: absolute; top: 60px; left: 0; right: 0;
@@ -972,12 +997,12 @@ footer .footer-bottom { background: rgba(0,0,0,0.35) !important; color: rgba(255
       }
       .nav-menu.active { display: flex; }
       .nav-menu li { width: 100%; padding: 1rem 2rem; border-bottom: 1px solid var(--border); }
-      h1 { font-size: 2rem; }
-      h2 { font-size: 1.5rem; }
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     }
     @media (max-width: 480px) {
+      .hero h1 { font-size: 1.6rem; }
       .footer-grid { grid-template-columns: 1fr; }
+      .hero-social-proof { font-size: 0.8rem; }
+      .chat-messages { max-height: 55vh; }
     }
     @media (hover: none) {
       .btn:hover { transform: none; }
