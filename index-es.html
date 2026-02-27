@@ -745,6 +745,48 @@
       animation: successPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
     }
 
+    /* FAQ Section */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: white;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .faq-item:hover { border-color: var(--teal); }
+    .faq-item[open] { border-color: var(--teal); box-shadow: 0 2px 8px rgba(0,128,128,0.08); }
+    .faq-question {
+      padding: 20px 24px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--navy);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .faq-question::-webkit-details-marker { display: none; }
+    .faq-question::after {
+      content: '+';
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--teal);
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+    .faq-item[open] .faq-question::after { content: '\2212'; }
+    .faq-answer {
+      padding: 0 24px 20px;
+      color: var(--slate);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+    .faq-answer p { margin: 0 0 12px; }
+    .faq-answer p:last-child { margin-bottom: 0; }
+
     /* California Focus */
     .california-focus {
       background: var(--teal-light);
@@ -1509,6 +1551,160 @@ footer { background: #0a1628 !important; }
     </div>
   </div>
 </section>
+
+<!-- FAQ Section -->
+<section id="faq" style="background:#F8FAFB;padding:80px 24px">
+  <div class="container" style="max-width:860px">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="section-label">PREGUNTAS FRECUENTES</div>
+      <h2 class="section-title">Preguntas sobre Medicare, Respondidas</h2>
+      <p class="section-sub" style="max-width:640px;margin:0 auto">Respuestas claras a las preguntas que las familias de California nos hacen con mayor frecuencia.</p>
+    </div>
+
+    <div class="faq-list">
+
+      <details class="faq-item">
+        <summary class="faq-question">&iquest;Cu&aacute;ndo puedo inscribirme en Medicare?</summary>
+        <div class="faq-answer">
+          <p>Tu Per&iacute;odo Inicial de Inscripci&oacute;n (IEP) comienza 3 meses antes de que cumplas 65 a&ntilde;os y termina 3 meses despu&eacute;s. Esta ventana de 7 meses es la m&aacute;s importante porque inscribirte tarde puede significar brechas en cobertura y multas permanentes en tus primas.</p>
+          <p>Tambi&eacute;n existen Per&iacute;odos Especiales de Inscripci&oacute;n si a&uacute;n trabajas con seguro de empleador, y el Per&iacute;odo Anual de Inscripci&oacute;n (15 de octubre al 7 de diciembre) cuando puedes cambiar planes de Medicare Advantage o Parte D.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">&iquest;Cu&aacute;l es la diferencia entre Medicare Advantage y Medicare Original con Suplemento?</summary>
+        <div class="faq-answer">
+          <p>Medicare Original (Partes A y B) con un Suplemento Medigap te da la mayor libertad: puedes ver a cualquier m&eacute;dico u hospital que acepte Medicare, en todo el pa&iacute;s, sin necesidad de referencias. La prima mensual es m&aacute;s alta, pero los costos de bolsillo son predecibles.</p>
+          <p>Medicare Advantage (Parte C) combina todo en un solo plan, frecuentemente con primas de $0 y beneficios adicionales como dental, visi&oacute;n y membres&iacute;a de gimnasio. La desventaja es que generalmente usas una red de m&eacute;dicos y puedes necesitar referencias para especialistas.</p>
+          <p>La opci&oacute;n correcta depende de tus m&eacute;dicos, medicamentos y presupuesto. Exactamente eso es lo que ayudamos a las familias a determinar.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">&iquest;Medicare cubre medicamentos recetados?</summary>
+        <div class="faq-answer">
+          <p>Medicare Original (Partes A y B) no cubre la mayor&iacute;a de los medicamentos ambulatorios. Necesitas un plan de Parte D separado o un plan Medicare Advantage que incluya cobertura de medicamentos.</p>
+          <p>Los planes de Parte D var&iacute;an seg&uacute;n el formulario (la lista de medicamentos cubiertos), la red de farmacias y el costo. Nosotros verificamos qu&eacute; plan cubre tus medicamentos espec&iacute;ficos al menor costo total, incluyendo primas, copagos y la brecha de cobertura.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">&iquest;Cu&aacute;nto cuesta Medicare en California?</summary>
+        <div class="faq-answer">
+          <p>La mayor&iacute;a de las personas pagan $0 por la Parte A (cobertura hospitalaria) si ellos o su c&oacute;nyuge pagaron impuestos de Medicare por al menos 10 a&ntilde;os. La prima est&aacute;ndar de la Parte B para 2025 es $185/mes, aunque las personas con ingresos m&aacute;s altos pagan m&aacute;s.</p>
+          <p>M&aacute;s all&aacute; de eso, los costos dependen de la cobertura adicional que elijas. Los planes Medicare Advantage en California frecuentemente tienen primas mensuales de $0. Los planes Suplemento Medigap van desde aproximadamente $100 hasta $300+/mes dependiendo del plan y tu edad. Nosotros comparamos todas tus opciones para que entiendas el costo total real.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">&iquest;Puedo mantener a mi m&eacute;dico con Medicare?</summary>
+        <div class="faq-answer">
+          <p>Con Medicare Original m&aacute;s un Suplemento, puedes ver a cualquier m&eacute;dico u hospital en el pa&iacute;s que acepte Medicare. La mayor&iacute;a lo acepta.</p>
+          <p>Con Medicare Advantage, generalmente necesitas usar proveedores dentro de la red. Nosotros verificamos si tus m&eacute;dicos actuales est&aacute;n en la red antes de recomendar un plan, para que no tengas sorpresas.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">&iquest;Hay multa por inscribirse tarde en Medicare?</summary>
+        <div class="faq-answer">
+          <p>S&iacute;. Si no te inscribes en la Parte B durante tu Per&iacute;odo Inicial de Inscripci&oacute;n y no tienes cobertura de empleador que califique, puedes pagar una multa del 10% por cada per&iacute;odo de 12 meses que pudiste haber tenido Parte B pero no la tuviste. Esta multa es permanente.</p>
+          <p>La Parte D tiene una multa similar: aproximadamente 1% de la prima base nacional por cada mes sin cobertura de medicamentos que califique. Estas multas son de por vida, por eso es tan importante inscribirte a tiempo.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">&iquest;Necesito Medicare si tengo seguro de mi empleador?</summary>
+        <div class="faq-answer">
+          <p>Depende del tama&ntilde;o de tu empleador. Si tu empleador tiene 20 o m&aacute;s empleados, tu cobertura grupal es primaria y Medicare es secundaria. Puedes retrasar la inscripci&oacute;n en la Parte B sin multa mientras tengas cobertura de empleador que califique.</p>
+          <p>Si el empleador tiene menos de 20 empleados, Medicare se convierte en primario a los 65 a&ntilde;os. En este caso, debes inscribirte en la Parte B durante tu IEP para evitar multas y brechas de cobertura.</p>
+          <p>Las reglas sobre cobertura de empleador y Medicare pueden ser complicadas. Ayudamos a familias a navegar exactamente esta situaci&oacute;n todo el tiempo.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">&iquest;Su servicio tiene alg&uacute;n costo?</summary>
+        <div class="faq-answer">
+          <p>No. Nuestra gu&iacute;a es completamente gratuita. Como agentes de Medicare con licencia, las compa&ntilde;&iacute;as de seguros nos compensan, no t&uacute;. Los planes cuestan lo mismo ya sea que te inscribas a trav&eacute;s de nosotros o directamente con la aseguradora. Sin recargos, sin tarifas ocultas y sin obligaci&oacute;n.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQPage Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "\u00bfCu\u00e1ndo puedo inscribirme en Medicare?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tu Per\u00edodo Inicial de Inscripci\u00f3n comienza 3 meses antes de cumplir 65 a\u00f1os y termina 3 meses despu\u00e9s. Tambi\u00e9n hay Per\u00edodos Especiales de Inscripci\u00f3n y el Per\u00edodo Anual de Inscripci\u00f3n (15 de octubre al 7 de diciembre)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "\u00bfCu\u00e1l es la diferencia entre Medicare Advantage y Medicare Original con Suplemento?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Medicare Original con Suplemento Medigap da m\u00e1s libertad para ver cualquier m\u00e9dico con costos predecibles. Medicare Advantage combina todo en un plan con primas frecuentemente de $0 y beneficios extras, pero usa red de proveedores."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "\u00bfMedicare cubre medicamentos recetados?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Medicare Original no cubre la mayor\u00eda de medicamentos ambulatorios. Necesitas un plan de Parte D separado o un plan Medicare Advantage que incluya cobertura de medicamentos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "\u00bfCu\u00e1nto cuesta Medicare en California?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La mayor\u00eda paga $0 por Parte A. La prima est\u00e1ndar de Parte B para 2025 es $185/mes. Los planes Medicare Advantage frecuentemente tienen primas de $0. Los Suplementos Medigap van de $100 a $300+/mes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "\u00bfPuedo mantener a mi m\u00e9dico con Medicare?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Con Medicare Original m\u00e1s Suplemento, puedes ver cualquier m\u00e9dico que acepte Medicare. Con Medicare Advantage, generalmente usas proveedores en red. Verificamos tu red antes de recomendar un plan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "\u00bfHay multa por inscribirse tarde en Medicare?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "S\u00ed. La Parte B tiene multa del 10% por cada 12 meses sin cobertura. La Parte D tiene multa de aproximadamente 1% por mes sin cobertura de medicamentos. Estas multas son permanentes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "\u00bfNecesito Medicare si tengo seguro de mi empleador?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende del tama\u00f1o del empleador. Con 20+ empleados, tu seguro grupal es primario. Con menos de 20, Medicare es primario a los 65 y debes inscribirte para evitar multas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "\u00bfSu servicio tiene alg\u00fan costo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Nuestra gu\u00eda es gratuita. Las compa\u00f1\u00edas de seguros nos compensan, no t\u00fa. Los planes cuestan lo mismo que directamente con la aseguradora. Sin recargos ni tarifas ocultas."
+      }
+    }
+  ]
+}
+</script>
 
 <!-- Footer -->
 </main>
@@ -2403,15 +2599,16 @@ footer { background: #0a1628 !important; }
     const inp = document.getElementById('chatInput');
     const es = document.body.classList.contains('lang-es');
     const modes = {
-      name:  { type:'text',  inputmode:'text',    placeholder: es?'Tu nombre completo':'Your full name' },
-      phone: { type:'tel',   inputmode:'tel',     placeholder: es?'(310) 555-1234':'(310) 555-1234' },
-      email: { type:'email', inputmode:'email',   placeholder: es?'tucorreo@ejemplo.com':'you@example.com' },
-      zip:   { type:'text',  inputmode:'numeric', placeholder: es?'Ej: 90210':'e.g. 90210' },
+      name:  { type:'text',  inputmode:'text',    placeholder: es?'Tu nombre completo':'Your full name', autocomplete:'name' },
+      phone: { type:'tel',   inputmode:'tel',     placeholder: es?'(310) 555-1234':'(310) 555-1234', autocomplete:'tel' },
+      email: { type:'email', inputmode:'email',   placeholder: es?'tucorreo@ejemplo.com':'you@example.com', autocomplete:'email' },
+      zip:   { type:'text',  inputmode:'numeric', placeholder: es?'Ej: 90210':'e.g. 90210', autocomplete:'postal-code' },
     };
-    const m = modes[field] || { type:'text', inputmode:'text', placeholder: '' };
+    const m = modes[field] || { type:'text', inputmode:'text', placeholder: '', autocomplete:'off' };
     inp.type = m.type;
     inp.inputMode = m.inputmode;
     inp.placeholder = m.placeholder;
+    inp.autocomplete = m.autocomplete;
     clearInputError();
     inp.focus();
     updateLeadProgress(field);
