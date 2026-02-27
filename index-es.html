@@ -12,13 +12,17 @@
   <meta property="og:description" content="Compara planes Medicare Advantage, Medigap y Parte D con un agente licenciada de California. Orientación gratuita y personalizada.">
   <meta property="og:type" content="website">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://medicarecalifornia.com/">
-  <meta property="og:url" content="https://medicarecalifornia.com/">
-  <meta property="og:locale" content="es_MX">
+  <link rel="canonical" href="https://californiaseniorsbenefits.com/index-es.html">
+  <meta property="og:url" content="https://californiaseniorsbenefits.com/index-es.html">
+  <meta property="og:locale" content="es_US">
+  <link rel="alternate" hreflang="en" href="https://californiaseniorsbenefits.com/index.html">
+  <link rel="alternate" hreflang="es" href="https://californiaseniorsbenefits.com/index-es.html">
   <meta property="og:site_name" content="Medicare California">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://californiaseniorsbenefits.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Medicare California | Ayuda Medicare Gratuita">
   <meta name="twitter:description" content="Compara planes Medicare con un agente licenciada de California. Orientación gratuita y personalizada.">
+  <meta name="twitter:image" content="https://californiaseniorsbenefits.com/og-image.png">
 
   <title>Medicare California | Ayuda Medicare Gratuita de un Agente Licenciada</title>
 
@@ -669,7 +673,13 @@
       background: var(--teal-dark);
       transform: scale(1.05);
     }
-    
+
+    /* ── Chat Form Enhancements ── */
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     /* California Focus */
     .california-focus {
       background: var(--teal-light);
@@ -1467,8 +1477,8 @@ footer { background: #0a1628 !important; }
   </div>
   
   <div class="footer-bottom">
-    <p>Not connected with or endorsed by the U.S. government or the federal Medicare program.</p>
-   
+    <p style="margin-bottom:8px">No ofrecemos todos los planes disponibles en su área. Cualquier información que proporcionemos se limita a los planes que ofrecemos en su área. Por favor, contacte a <a href="https://www.medicare.gov" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.7)">Medicare.gov</a> o llame al 1-800-MEDICARE para obtener información sobre todas sus opciones. La asesoría es gratuita y sin compromiso para usted.</p>
+    <p>Este sitio no tiene conexión ni está avalado por el gobierno de los EE.UU. ni por el programa federal de Medicare.</p>
   </div>
 
   <div style="text-align:center;padding:1rem 2rem 0.5rem;font-size:0.8rem;opacity:0.6">
@@ -2258,27 +2268,46 @@ footer { background: #0a1628 !important; }
     }, 600);
   }
   
+  function setInputMode(field) {
+    const inp = document.getElementById('chatInput');
+    const es = document.body.classList.contains('lang-es');
+    const modes = {
+      name:  { type:'text',  inputmode:'text',    placeholder: es?'Tu nombre completo':'Your full name' },
+      phone: { type:'tel',   inputmode:'tel',     placeholder: es?'(310) 555-1234':'(310) 555-1234' },
+      email: { type:'email', inputmode:'email',   placeholder: es?'tucorreo@ejemplo.com':'you@example.com' },
+      zip:   { type:'text',  inputmode:'numeric', placeholder: es?'Ej: 90210':'e.g. 90210' },
+    };
+    const m = modes[field] || { type:'text', inputmode:'text', placeholder: '' };
+    inp.type = m.type;
+    inp.inputMode = m.inputmode;
+    inp.placeholder = m.placeholder;
+    inp.focus();
+  }
+
   function startLeadCapture() {
     chatState.currentState = agentStates.lead_capture;
     chatState.leadData = {};
     chatState.pendingFieldCapture = 'name';
     addAgentMessage(getMsg('lead_name_prompt'));
-    document.getElementById('chatInput').focus();
+    setInputMode('name');
   }
-  
+
   function handleLeadCapture(action, text) {
     if (action === 'lead_name') {
       chatState.leadData.name = text;
       chatState.pendingFieldCapture = 'phone';
       addAgentMessage(getMsg('lead_phone_prompt'));
+      setInputMode('phone');
     } else if (action === 'lead_phone') {
       chatState.leadData.phone = text;
       chatState.pendingFieldCapture = 'email';
       addAgentMessage(getMsg('lead_email_prompt'));
+      setInputMode('email');
     } else if (action === 'lead_email') {
       chatState.leadData.email = text;
       chatState.pendingFieldCapture = 'zip';
       addAgentMessage(getMsg('lead_zip_prompt'));
+      setInputMode('zip');
     } else if (action === 'lead_zip') {
       chatState.leadData.zip = text;
       finalizeLead();

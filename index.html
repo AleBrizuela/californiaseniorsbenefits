@@ -12,13 +12,17 @@
   <meta property="og:description" content="Compare Medicare Advantage, Medigap, and Part D plans with a licensed California agent. Free, personalized guidance.">
   <meta property="og:type" content="website">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://medicarecalifornia.com/">
-  <meta property="og:url" content="https://medicarecalifornia.com/">
+  <link rel="canonical" href="https://californiaseniorsbenefits.com/">
+  <meta property="og:url" content="https://californiaseniorsbenefits.com/">
+  <link rel="alternate" hreflang="en" href="https://californiaseniorsbenefits.com/index.html">
+  <link rel="alternate" hreflang="es" href="https://californiaseniorsbenefits.com/index-es.html">
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="Medicare California">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://californiaseniorsbenefits.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Medicare California | Free Medicare Help">
   <meta name="twitter:description" content="Compare Medicare plans with a licensed California agent. Free, personalized guidance.">
+  <meta name="twitter:image" content="https://californiaseniorsbenefits.com/og-image.png">
 
   <title>Medicare California | Free Medicare Help from a Licensed California Agent</title>
 
@@ -669,7 +673,68 @@
       background: var(--teal-dark);
       transform: scale(1.05);
     }
-    
+
+    /* ── Chat Form Enhancements ── */
+    .dob-picker-form {
+      animation: fadeSlideIn 0.3s ease;
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .dob-picker-form select,
+    .dob-picker-form input[type="number"] {
+      width: 100%;
+      padding: 10px 10px;
+      border: 2px solid #E2E8F0;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: var(--text-dark);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .dob-picker-form select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23475569' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+    .dob-picker-form select:focus,
+    .dob-picker-form input[type="number"]:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(13,148,136,0.12);
+    }
+    .dob-picker-form label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1E3A5F;
+      margin-bottom: 4px;
+    }
+    .dob-picker-form .dob-confirm-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
+    .dob-picker-form .dob-confirm-btn:hover {
+      background: var(--teal-dark);
+    }
+    .dob-picker-form .dob-confirm-btn:active {
+      transform: scale(0.98);
+    }
+
     /* California Focus */
     .california-focus {
       background: var(--teal-light);
@@ -1534,12 +1599,12 @@ footer { background: #0a1628 !important; }
   </div>
   
   <div class="footer-bottom">
+    <p style="margin-bottom:8px">We do not offer every plan available in your area. Any information we provide is limited to the plans we offer in your area. Please contact <a href="https://www.medicare.gov" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.7)">Medicare.gov</a> or call 1-800-MEDICARE for information on all of your options. Our advice is free and without obligation to you.</p>
     <p>Not connected with or endorsed by the U.S. government or the federal Medicare program.</p>
-   
   </div>
 
   <div style="text-align:center;padding:1rem 2rem 0.5rem;font-size:0.8rem;opacity:0.6">
-    <a href="https://www.guiamarcos.com/" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.7);text-decoration:none">Guia Marcos</a> — nuestro sitio en español · Want to chat with our automated guide? <a href="https://californiaseniorsbenefits.com/index.html" style="color:rgba(255,255,255,0.9);text-decoration:underline">Chat now</a>
+    <a href="https://www.guiamarcos.com/" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.7);text-decoration:none">Guia Marcos</a> — nuestro sitio en español
   </div>
 </footer>
 
@@ -2338,18 +2403,36 @@ footer { background: #0a1628 !important; }
     chatState.leadData = {};
     chatState.pendingFieldCapture = 'name';
     addAgentMessage(getMsg('lead_name_prompt'));
-    document.getElementById('chatInput').focus();
+    setInputMode('name');
   }
   
+  function setInputMode(field) {
+    const inp = document.getElementById('chatInput');
+    const es = document.body.classList.contains('lang-es');
+    const modes = {
+      name:  { type:'text',  inputmode:'text',    placeholder: es?'Tu nombre completo':'Your full name' },
+      phone: { type:'tel',   inputmode:'tel',     placeholder: es?'(310) 555-1234':'(310) 555-1234' },
+      email: { type:'email', inputmode:'email',   placeholder: es?'tucorreo@ejemplo.com':'you@example.com' },
+      zip:   { type:'text',  inputmode:'numeric', placeholder: es?'Ej: 90210':'e.g. 90210' },
+    };
+    const m = modes[field] || { type:'text', inputmode:'text', placeholder: '' };
+    inp.type = m.type;
+    inp.inputMode = m.inputmode;
+    inp.placeholder = m.placeholder;
+    inp.focus();
+  }
+
   function handleLeadCapture(action, text) {
     if (action === 'lead_name') {
       chatState.leadData.name = text;
       chatState.pendingFieldCapture = 'phone';
       addAgentMessage(getMsg('lead_phone_prompt'));
+      setInputMode('phone');
     } else if (action === 'lead_phone') {
       chatState.leadData.phone = text;
       chatState.pendingFieldCapture = 'email';
       addAgentMessage(getMsg('lead_email_prompt'));
+      setInputMode('email');
     } else if (action === 'lead_email') {
       chatState.leadData.email = text;
       chatState.pendingFieldCapture = 'dob';
@@ -2385,31 +2468,35 @@ footer { background: #0a1628 !important; }
     
     const bubble = document.createElement('div');
     bubble.className = 'message-bubble';
+    const months_en = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const months_es = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    const months = es ? months_es : months_en;
     bubble.innerHTML = `
-      <p style="margin:0 0 10px;font-weight:600">${getMsg('lead_dob_prompt')}</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-        <div>
-          <label style="display:block;font-size:12px;font-weight:600;color:#1E3A5F;margin-bottom:4px">${es?'Mes':'Month'}</label>
-          <select id="dob-month" style="width:100%;padding:10px 8px;border:2px solid #E2E8F0;border-radius:8px;font-size:15px">
-            <option value="">${es?'Mes':'Mo'}</option>
-            ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((m,i)=>`<option value="${i+1}">${m}</option>`).join('')}
-          </select>
+      <div class="dob-picker-form">
+        <p style="margin:0 0 10px;font-weight:600">${getMsg('lead_dob_prompt')}</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+          <div>
+            <label>${es?'Mes':'Month'}</label>
+            <select id="dob-month">
+              <option value="">${es?'Mes':'Mo'}</option>
+              ${months.map((m,i)=>`<option value="${i+1}">${m}</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <label>${es?'Día':'Day'}</label>
+            <select id="dob-day">
+              <option value="">${es?'Día':'Day'}</option>
+              ${Array.from({length:31},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('')}
+            </select>
+          </div>
         </div>
-        <div>
-          <label style="display:block;font-size:12px;font-weight:600;color:#1E3A5F;margin-bottom:4px">${es?'Día':'Day'}</label>
-          <select id="dob-day" style="width:100%;padding:10px 8px;border:2px solid #E2E8F0;border-radius:8px;font-size:15px">
-            <option value="">${es?'Día':'Day'}</option>
-            ${Array.from({length:31},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('')}
-          </select>
+        <div style="margin-bottom:12px">
+          <label>${es?'Año de nacimiento':'Birth Year'}</label>
+          <input type="number" id="dob-year" min="1924" max="2005" placeholder="${es?'Ej: 1955':'e.g. 1955'}" inputmode="numeric">
         </div>
+        <button onclick="confirmDob()" class="dob-confirm-btn">${es?'Confirmar fecha':'Confirm date'}</button>
+        <div id="dob-error" style="display:none;color:#DC2626;font-size:13px;margin-top:6px"></div>
       </div>
-      <div style="margin-bottom:12px">
-        <label style="display:block;font-size:12px;font-weight:600;color:#1E3A5F;margin-bottom:4px">${es?'Año de nacimiento':'Birth Year'}</label>
-        <input type="number" id="dob-year" min="1924" max="2005" placeholder="${es?'Ej: 1955':'e.g. 1955'}"
-          style="width:100%;padding:10px 12px;border:2px solid #E2E8F0;border-radius:8px;font-size:16px;box-sizing:border-box">
-      </div>
-      <button onclick="confirmDob()" style="width:100%;padding:12px;background:#0D9488;color:white;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">${es?'Confirmar fecha':'Confirm date'}</button>
-      <div id="dob-error" style="display:none;color:#DC2626;font-size:13px;margin-top:6px"></div>
     `;
     
     const wrapper = document.createElement('div');
@@ -2456,10 +2543,10 @@ footer { background: #0a1628 !important; }
     // Re-enable input and proceed to zip
     const inp = document.getElementById('chatInput');
     inp.disabled = false;
-    inp.placeholder = '';
-    
+
     chatState.pendingFieldCapture = 'zip';
     addAgentMessage(getMsg('lead_zip_prompt'));
+    setInputMode('zip');
   }
 
   function finalizeLead() {
