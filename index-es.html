@@ -547,7 +547,7 @@
     }
     
     .message-bubble {
-      max-width: 70%;
+      max-width: 75%;
       padding: 0.875rem 1.25rem;
       border-radius: 12px;
       word-wrap: break-word;
@@ -678,6 +678,67 @@
     @keyframes fadeSlideIn {
       from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Lead Progress Bar ── */
+    .lead-progress {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: linear-gradient(135deg, var(--teal-light), #E0F7F5);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      animation: fadeSlideIn 0.3s ease;
+    }
+    .lead-progress-step {
+      width: 28px;
+      height: 4px;
+      border-radius: 2px;
+      background: #CBD5E1;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .lead-progress-step.done { background: var(--teal); }
+    .lead-progress-step.active { background: var(--coral); transform: scaleY(1.5); }
+    .lead-progress-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--slate);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* ── Field Validation ── */
+    .chat-input.input-error {
+      border-color: #DC2626 !important;
+      box-shadow: 0 0 0 3px rgba(220,38,38,0.1) !important;
+    }
+    .chat-input-hint {
+      font-size: 11px;
+      color: #DC2626;
+      padding: 2px 12px 0;
+      display: none;
+    }
+    .chat-input-hint.visible { display: block; }
+
+    /* ── Success Check Animation ── */
+    @keyframes successPop {
+      0%   { transform: scale(0); opacity: 0; }
+      50%  { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), #10B981);
+      color: white;
+      font-size: 24px;
+      margin-bottom: 8px;
+      animation: successPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
     }
 
     /* California Focus */
@@ -1062,6 +1123,8 @@ footer { background: #0a1628 !important; }
       .btn:hover { transform: none; }
       .quick-reply-btn { padding: 0.75rem 1rem; font-size: 0.9rem; min-height: 44px; }
       .chat-send-btn { width: 44px; height: 44px; }
+      .message-bubble { max-width: 85%; }
+      .chat-messages { scroll-behavior: smooth; }
       .chat-input { min-height: 44px; font-size: 16px; }
       .faq-question { min-height: 44px; }
     }
@@ -1165,6 +1228,7 @@ footer { background: #0a1628 !important; }
           <i class="fas fa-paper-plane"></i>
         </button>
       </div>
+      <div class="chat-input-hint" id="chatInputHint"></div>
     </div>
   </div>
 </section>
@@ -2268,6 +2332,70 @@ footer { background: #0a1628 !important; }
     }, 600);
   }
   
+  const leadSteps = ['name','phone','email','zip'];
+
+  function updateLeadProgress(currentField) {
+    const es = document.body.classList.contains('lang-es');
+    const idx = leadSteps.indexOf(currentField);
+    if (idx < 0) return;
+    document.querySelectorAll('.lead-progress').forEach(el => el.remove());
+    const bar = document.createElement('div');
+    bar.className = 'lead-progress';
+    const labels = es ? ['Nombre','Tel','Email','ZIP'] : ['Name','Phone','Email','ZIP'];
+    leadSteps.forEach((s, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'lead-progress-step' + (i < idx ? ' done' : i === idx ? ' active' : '');
+      bar.appendChild(dot);
+    });
+    const lbl = document.createElement('span');
+    lbl.className = 'lead-progress-label';
+    lbl.textContent = (es ? 'Paso ' : 'Step ') + (idx+1) + '/4';
+    bar.appendChild(lbl);
+    const messages = document.getElementById('chatMessages');
+    messages.appendChild(bar);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function clearInputError() {
+    document.getElementById('chatInput').classList.remove('input-error');
+    const hint = document.getElementById('chatInputHint');
+    if (hint) { hint.classList.remove('visible'); hint.textContent = ''; }
+  }
+
+  function showInputError(msg) {
+    document.getElementById('chatInput').classList.add('input-error');
+    const hint = document.getElementById('chatInputHint');
+    if (hint) { hint.textContent = msg; hint.classList.add('visible'); }
+  }
+
+  function validateField(field, value) {
+    const es = document.body.classList.contains('lang-es');
+    if (field === 'phone') {
+      const digits = value.replace(/\D/g, '');
+      if (digits.length < 10) {
+        showInputError(es ? 'Ingresa un número de 10 dígitos' : 'Enter a 10-digit phone number');
+        return false;
+      }
+    } else if (field === 'email') {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        showInputError(es ? 'Ingresa un correo válido' : 'Enter a valid email address');
+        return false;
+      }
+    } else if (field === 'zip') {
+      if (!/^\d{5}$/.test(value.trim())) {
+        showInputError(es ? 'Ingresa un código postal de 5 dígitos' : 'Enter a 5-digit ZIP code');
+        return false;
+      }
+    } else if (field === 'name') {
+      if (value.trim().length < 2) {
+        showInputError(es ? 'Ingresa tu nombre' : 'Please enter your name');
+        return false;
+      }
+    }
+    clearInputError();
+    return true;
+  }
+
   function setInputMode(field) {
     const inp = document.getElementById('chatInput');
     const es = document.body.classList.contains('lang-es');
@@ -2281,7 +2409,9 @@ footer { background: #0a1628 !important; }
     inp.type = m.type;
     inp.inputMode = m.inputmode;
     inp.placeholder = m.placeholder;
+    clearInputError();
     inp.focus();
+    updateLeadProgress(field);
   }
 
   function startLeadCapture() {
@@ -2364,16 +2494,24 @@ footer { background: #0a1628 !important; }
     const lang = document.body.classList.contains('lang-es') ? 'es' : 'en';
     const timeText = lang === 'es' ? (bestTime.includes('Morning') ? 'por la mañana' : bestTime.includes('Afternoon') ? 'por la tarde' : bestTime.includes('Evening') ? 'por la noche' : 'cuando sea') : bestTime;
 
-    const confirmMsg = '<strong>' + getMsg('confirmation_prefix') + ', ' + name + '!</strong><br/><br/>' + getMsg('confirmation_intro') + ' ' + timeText + ' to discuss your parent\'s Medicare options. Here\'s what to expect:<br/>' + getMsg('confirmation_body');
+    // Remove progress bar
+    document.querySelectorAll('.lead-progress').forEach(el => el.remove());
+
+    const confirmMsg = '<div class="success-check"><i class="fas fa-check"></i></div><br/><strong>' + getMsg('confirmation_prefix') + ', ' + name + '!</strong><br/><br/>' + getMsg('confirmation_intro') + ' ' + timeText + ' to discuss your parent\'s Medicare options. Here\'s what to expect:<br/>' + getMsg('confirmation_body');
 
     addAgentMessage(confirmMsg, [
       { text: getMsg('confirmation_schedule'), action: 'confirm_schedule' },
       { text: getMsg('confirmation_whatsapp'), action: 'confirm_whatsapp' }
     ]);
 
+    // Reset input state
+    const inp = document.getElementById('chatInput');
+    inp.type = 'text';
+    inp.inputMode = 'text';
     document.getElementById('chatInputArea').classList.add('disabled');
-    document.getElementById('chatInput').disabled = true;
-    document.getElementById('chatInput').value = getMsg('confirmation_done');
+    inp.disabled = true;
+    inp.value = getMsg('confirmation_done');
+    clearInputError();
   }
   
   function handleConfirmation(action) {
@@ -2387,12 +2525,17 @@ footer { background: #0a1628 !important; }
   function sendChatMessage() {
     const input = document.getElementById('chatInput');
     const msg = input.value.trim();
-    
+
     if (!msg) return;
-    
+
+    // Validate if in lead capture mode
+    if (chatState.pendingFieldCapture) {
+      if (!validateField(chatState.pendingFieldCapture, msg)) return;
+    }
+
     addUserMessage(msg);
     input.value = '';
-    
+
     if (chatState.pendingFieldCapture) {
       const field = chatState.pendingFieldCapture;
       chatState.pendingFieldCapture = null;
