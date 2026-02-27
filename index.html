@@ -781,6 +781,7 @@
       color: #DC2626;
       padding: 2px 12px 0;
       display: none;
+      word-wrap: break-word;
     }
     .chat-input-hint.visible {
       display: block;
@@ -1101,7 +1102,7 @@
       }
 
       .message-bubble {
-        max-width: 88%;
+        max-width: 85%;
         font-size: 0.9rem;
         padding: 0.75rem 1rem;
       }
@@ -1117,8 +1118,7 @@
         width: 100%;
       }
 
-      /* Chat: wider bubbles + iOS zoom fix */
-      .message-bubble { max-width: 85%; }
+      /* Chat: smooth scroll + iOS zoom fix */
       .chat-messages { scroll-behavior: smooth; }
       .chat-input {
         font-size: 16px;
